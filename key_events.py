@@ -1,6 +1,7 @@
 import pygame
 import sys
 
+
 """
 Lib for all key events
 """
@@ -12,10 +13,10 @@ b_path = img_path + 'b'
 r_path = img_path + 'r'
 l_path =  img_path + 'l'
 
-f_images = [f_path+str(f)+'.png' for f in range(7)]
-b_images = [b_path+str(b)+'.png' for b in range(7)]
-r_images = [r_path+str(r)+'.png' for r in range(7)] 
-l_images = [l_path+str(l)+'.png' for l in range(7)]
+f_images = [f_path+str(f)+'.png' for f in range(11)]
+b_images = [b_path+str(b)+'.png' for b in range(11)]
+r_images = [r_path+str(r)+'.png' for r in range(11)] 
+l_images = [l_path+str(l)+'.png' for l in range(11)]
 
 # IMAGES FOR WOLF LINK ANIMATED WALKING
 img_path = './sprites/wolf/wolf_'
@@ -38,6 +39,7 @@ class KeyEvents:
         self.wolf_counter_lr = 0
         self.movement = .25
         self.orbs = []
+        
 
     def global_events(self):
         if self.PLAYER.TRANSFORM:
@@ -59,6 +61,7 @@ class KeyEvents:
         if self.PLAYER.TRANSFORM:
             self.PLAYER.WOLF  = pygame.image.load(wolf_f_images[self.wolf_counter])
             self.wolf_counter = (self.wolf_counter + 1) % len(wolf_f_images)
+    
 
     def key_up(self):
         self.PLAYER.PLAYER_POS[1] -= self.movement 
@@ -94,9 +97,12 @@ class KeyEvents:
             self.wolf_counter_lr = (self.wolf_counter_lr + 1) % len(wolf_r_images)
 
     def key_space(self):
+        placeSFX = pygame.mixer.Sound("./Sounds/putDown.wav")
         if self.PLAYER.WEAPON:
             self.PLAYER.PLAYER_INV.remove(self.PLAYER.WEAPON)
             self.PLAYER.WEAPON.PLACED = True
+            # A SOUND EFFECT PLAYS WHEN A WEAPON IS PLACED ON THE GRID
+            pygame.mixer.Sound.play(placeSFX)
 
             # DROP WEAPON LOCATION
             if self.PLAYER.DIRECTION == 'd':
